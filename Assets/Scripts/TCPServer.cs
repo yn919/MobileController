@@ -8,6 +8,7 @@ public class TCPServer : MonoBehaviour
 {
     private string ipAddress = "127.0.0.1";
     private int port = 9003;
+    private int bufferSize = 1024;
     private TcpListener tcpListener;
 
     private void Awake()
@@ -21,13 +22,17 @@ public class TCPServer : MonoBehaviour
         tcpListener.Start();
         using TcpClient acceptedClient = await tcpListener.AcceptTcpClientAsync();
 
+        System.Diagnostics.Debug.WriteLine("Connencted");
+
         using NetworkStream stream = acceptedClient.GetStream();
 
-        byte[] buffer = new byte[1024];
+        byte[] buffer = new byte[bufferSize];
         int readByte = 0;
         readByte = await stream.ReadAsync(buffer, 0, buffer.Length);
 
         string receivedMessage = Encoding.UTF8.GetString(buffer, 0, readByte);
+
+        System.Diagnostics.Debug.WriteLine($"Received message {receivedMessage}");
     }
 
     private void OnDestroy()
