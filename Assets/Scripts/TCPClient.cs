@@ -11,8 +11,8 @@ public class TCPClient : MonoBehaviour
     [SerializeField] private TextMeshProUGUI connectedStatus;
 
     private const int DEFAULT_PORT = 9003;
-    private const string CONNECTED = "接続済み";
-    private const string DISCONNECTED = "未接続";
+    private const string CONNECTED = "Connected";
+    private const string DISCONNECTED = "Disconnected";
 
     private TcpClient tcpClient;
 
