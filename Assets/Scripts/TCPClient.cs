@@ -11,30 +11,30 @@ public class TCPClient : MonoBehaviour
     [SerializeField] private TextMeshProUGUI connectedStatus;
 
     private const int DEFAULT_PORT = 9003;
-    private const string CONNECTED = "Connected";
-    private const string DISCONNECTED = "Disconnected";
+    private const string CONNECTED = "接続済み";
+    private const string DISCONNECTED = "未接続";
 
     private TcpClient tcpClient;
 
     private void Awake()
     {
-        // Ensure UI references are set
+        // UIの参照が設定されていることを確認
         if (inputField == null || connectedStatus == null)
         {
-            Debug.LogError("TCPClient: UI references are missing. Please assign in the inspector.");
+            Debug.LogError("TCPClient: UIの参照が不足しています。インスペクターで割り当ててください。");
         }
     }
 
     public async void Connect()
     {
-        // Disconnect existing connection if any
+        // 既存の接続があれば切断
         DisconnectClient();
 
         try
         {
             if (string.IsNullOrWhiteSpace(inputField.text))
             {
-                Debug.LogWarning("Please enter a valid IP address.");
+                Debug.LogWarning("有効なIPアドレスを入力してください。");
                 UpdateConnectionStatus(false);
                 return;
             }
@@ -45,7 +45,7 @@ public class TCPClient : MonoBehaviour
         }
         catch (Exception e)
         {
-            Debug.LogError($"Connection failed: {e.Message}");
+            Debug.LogError($"接続に失敗しました: {e.Message}");
             UpdateConnectionStatus(false);
         }
     }
@@ -71,7 +71,7 @@ public class TCPClient : MonoBehaviour
     {
         if (tcpClient == null || !tcpClient.Connected)
         {
-            Debug.LogWarning("Not connected. Cannot send command.");
+            Debug.LogWarning("接続されていません。コマンドを送信できません。");
             return;
         }
 
@@ -83,7 +83,7 @@ public class TCPClient : MonoBehaviour
         }
         catch (Exception e)
         {
-            Debug.LogError($"Error sending command: {e.Message}");
+            Debug.LogError($"コマンドの送信中にエラーが発生しました: {e.Message}");
         }
     }
 

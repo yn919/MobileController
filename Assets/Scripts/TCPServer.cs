@@ -16,7 +16,7 @@ public class TCPServer : MonoBehaviour
     private TcpListener tcpListener;
     private CancellationTokenSource cancellationTokenSource;
 
-    // Movement control variables
+    // 移動制御用の変数
     public bool IsMovingUp { get; private set; } = false;
     public bool IsMovingDown { get; private set; } = false;
     public bool IsMovingLeft { get; private set; } = false;
@@ -29,25 +29,25 @@ public class TCPServer : MonoBehaviour
 
     public void StartServer()
     {
-        // Stop existing server if running
+        // 既存のサーバーが実行中であれば停止
         StopServer();
 
-        // Create a new cancellation token source
+        // 新しいキャンセレーショントークンを作成
         cancellationTokenSource = new CancellationTokenSource();
 
-        // Start new server
+        // 新しいサーバーを開始
         Task.Run(async () => await RunServerAsync(cancellationTokenSource.Token), cancellationTokenSource.Token);
     }
 
     public void StopServer()
     {
-        // Cancel any existing server operation
+        // 既存のサーバー操作をキャンセル
         if (cancellationTokenSource != null)
         {
             cancellationTokenSource.Cancel();
         }
 
-        // Close the TCP listener if it exists
+        // TCPリスナーが存在する場合は閉じる
         if (tcpListener != null)
         {
             tcpListener.Stop();
@@ -62,7 +62,7 @@ public class TCPServer : MonoBehaviour
             string ipAddress = ipAddressInput != null ? ipAddressInput.text : "127.0.0.1";
             tcpListener = new TcpListener(IPAddress.Parse(ipAddress), DEFAULT_PORT);
             tcpListener.Start();
-            Debug.Log($"Server started on {ipAddress}:{DEFAULT_PORT}");
+            Debug.Log($"サーバーを開始しました: {ipAddress}:{DEFAULT_PORT}");
 
             while (!cancellationToken.IsCancellationRequested)
             {
@@ -72,7 +72,7 @@ public class TCPServer : MonoBehaviour
         }
         catch (Exception ex)
         {
-            Debug.LogError($"Server error: {ex.Message}");
+            Debug.LogError($"サーバーエラー: {ex.Message}");
         }
     }
 
@@ -96,7 +96,7 @@ public class TCPServer : MonoBehaviour
         }
         catch (Exception ex)
         {
-            Debug.LogError($"Client handling error: {ex.Message}");
+            Debug.LogError($"クライアント処理エラー: {ex.Message}");
         }
     }
 
@@ -105,7 +105,7 @@ public class TCPServer : MonoBehaviour
 
     private void ProcessCommand(string command)
     {
-        Debug.Log($"Received command: {command}");
+        Debug.Log($"コマンドを受信: {command}");
 
         Vector2 movement = Vector2.zero;
 
@@ -132,7 +132,7 @@ public class TCPServer : MonoBehaviour
                 IsMovingRight = true;
                 break;
             default:
-                Debug.LogWarning($"Unknown command: {command}");
+                Debug.LogWarning($"不明なコマンド: {command}");
                 break;
         }
 
@@ -154,16 +154,16 @@ public class TCPServer : MonoBehaviour
         else if (IsMovingRight)
             movement.x += 1f;
         
-        // Normalize movement to prevent faster diagonal movement
+        // 斜め移動時の速度を正規化
         movement = movement.normalized;
         
-        // Move based on the movement vector
+        // 移動ベクトルに基づいて移動
         transform.Translate(movement * Time.deltaTime);
     }
 
     private void OnDestroy()
     {
-        // Cancel all ongoing operations
+        // 進行中のすべての操作をキャンセル
         cancellationTokenSource?.Cancel();
         tcpListener?.Stop();
     }
