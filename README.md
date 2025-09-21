@@ -1,4 +1,4 @@
-# モバイルコントローラーシステム 技術仕様書
+# MobileCpntroller 技術仕様書
 
 ## 1. システム概要
 - **目的**: Android端末をコントローラーとして使用し、TCP/IP通信で3D車両を遠隔操作
@@ -63,3 +63,6 @@ graph LR
 | ↓      | DOWN         | 後退     |
 | ←      | LEFT         | 左旋回   |
 | →      | RIGHT        | 右旋回   |
+
+## 6. 解説動画
+MobileController\Movies\MobileController解説.mp4
