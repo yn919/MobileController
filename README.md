@@ -65,4 +65,4 @@ graph LR
 | →      | RIGHT        | 右旋回   |
 
 ## 6. 解説動画
-MobileController\Movies\MobileController解説.mp4
+[MobileController\Movies\MobileController解説.mp4](https://github.com/yn919/MobileController/blob/main/Movies/MobileController%E8%A7%A3%E8%AA%AC.mp4)
